@@ -1,0 +1,52 @@
+# здесь мы прописываем все необходимые зависимости (в том числе подгружаемые интерфейсы и контракты)
+dependencies:
+  # формат:
+  # - <organization/repo>@<version>
+  - smartcontractkit/chainlink-brownie-contracts@1.1.1
+  # здесь мы указываем, как транслировать все import в solidity (т.е. куда компилятор должен лезть, когда видит их!)
+  # просто указываем ему, что когда он встретит @chainlink
+  # он должен перейти по ссылке на те репозитори, которые мы ранее указали в dependencies 
+compiler:
+  solc:
+    remappings:
+      - '@chainlink=smartcontractkit/chainlink-brownie-contracts@1.1.1'
+
+# говорим, как называется наш .env файл
+dotenv:
+  .env
+
+  
+# устанавливаем .env аттрибуты
+wallets:
+  from_key: ${PRIVATE_KEY}
+
+
+networks:
+
+  # сеть по умолчанию (дефолтно - development)
+  # default: ganache-me
+
+  # наши кастомные сети
+  ganache-me:
+    verify: False
+
+  # наши форки 
+  # mainnet
+  mainnet-fork-dev:
+    eth_usd_price_feed: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" # контракт конвертор usd / eth для mainnet 
+    verify: False # должен быть false!
+
+
+  # основные сети (test- и main- nets)
+  rinkeby:
+    eth_usd_price_feed: "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e"
+    verify: True
+  
+
+
+  # kovan:
+  # mainnet:
+
+  # все дефолтные development сети
+  development:
+    verify: False
